@@ -1,0 +1,413 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="scripts/jquery.min.js"></script>
+</head>
+<body>
+<div class="preloader">
+  <div class="app-preinfo">
+    <span id="app-name">JUST DO NOTHING</span>
+  </div>
+  <div class="preloader__row">
+    <div class="preloader__item"></div>
+    <div class="preloader__item"></div>
+  </div>
+  <img src="images/pre.png" alt="preloader">
+</div>
+<div class="wrapper">
+  <header>
+    <div class="score">
+      <img src="images/foods/leaf.png" alt="money" class="money-icon" id="money__icon">
+      <span class="money">0</span>
+    </div>
+    <div class="settings">
+      <div class="buttons">
+        <div id="two" class="button"><img src="images/icons/Setting-off.svg" alt="settings" fill="#fff"></div>
+      </div>
+    </div>
+    <div id="modal-container">
+      <div class="modal-background">
+        <div class="modal">
+          <div class="title">
+            <div id="placeholder-title"></div>
+            <span class="title-text">SETTINGS</span>
+            <div class="button-contacts" onclick="showContactsInfo();"><img src="images/icons/Info.svg" alt="info"></div>
+          </div>
+          <div class="settings-menu">
+            <span class="mini-title">Music:</span>
+            <div class="range-slider">
+              <input class="range_input" type="range" max="1.0" min="0.01" step="0.01" onchange="changevolume(this.value);">
+            </div>
+            <!-- <span class="mini-title">Effects:</span>
+            <div class="range-slider">
+              <input class="range_input" type="range" min="0" max="100" value="70" step="1">
+            </div> -->
+            <div class="theme">
+              <span class="title-theme">Theme:</span>
+              <div class="button-theme">
+                <label id="switch" class="switch">
+                    <input type="checkbox" onchange="toggleTheme()" id="slider">
+                    <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div class="mini-buttons">
+              <a href="index.html"><img src="images/icons/english.svg" alt="english"></a>
+              <a href="index_ru.html"><img src="images/icons/russian.svg" alt="russian"></a>
+            </div>
+            <div class="reset-progress" onclick="hardReset();">Reset progress</div>
+            <div class="mini-buttons">
+              <div id="accept"><img src="images/icons/accept.svg" alt="accept"></div>
+              <div id="deny"><img src="images/icons/deny.svg" alt="deny"></div>
+            </div>
+          </div>
+        </div>
+        <div class="contacts">
+          <div class="title">
+            <span class="title-text">CONTACTS</span>
+          </div>
+          <div class="contacts-info">
+            <h3>Developers:</h3>
+            <p class="dev-name">Kalinin Ilya</p>
+            <p class="dev-name">Gromov Nikita</p>
+            <p class="dev-name">Pokryshkin Daniil</p>
+            <p>351018</p>
+            <img src="images/about_us.png" alt="about_us" id="about_us">
+            <div class="mini-buttons">
+              <div id="deny"><img src="images/icons/deny.svg" alt="deny"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <img id="lamp" src="images/lamp.png" alt="lamp">
+  <main>
+    <div class="container-notification">
+        <!-- ==================== -->
+        <!-- Notification Element -->
+        <section class="notification animation" id="notification">
+            <h6></h6>
+        </section>
+        <!-- Notification Element -->
+        <!-- ==================== -->
+    </div>
+
+    <div class="clicker">
+      <canvas id="canvas"></canvas>
+      <div class="animal">
+        <img src="sprites/cat.gif" alt="animal" id="cat">
+        <img src="sprites/korgi.gif" alt="animal" id="korgi">
+        <img src="sprites/panda.gif" alt="animal" id="panda">
+        <img src="sprites/red_panda.gif" alt="animal" id="red_panda">
+        <img src="sprites/koala.gif" alt="animal" id="koala">
+        <img src="sprites/sloth.gif" alt="animal" id="sloth">
+      </div>
+      <img id="tree" src="images/tree.svg" alt="tree">
+    </div>
+    <div class="shop">
+      <div class="upgrades">
+        <span class="shop-name" onclick="showUpgradeShop();">UPGRADES</span>
+        <div class="shop-upgrades">
+          <div id="placeholder-item"></div>
+          <div class="upgrade-item" id="upgrade_cursor" onclick="chooseUpgrade('cursor');">
+            <img src="images/upgrades/cursor.png" alt="cursor">
+            <div class="upgrade-info">
+              <span class="upgrade-name">Cursor</span>
+              <span class="upgrade-description">
+                You can improve your cost per click by purchasing this.
+                Your click x2.5 food.
+              </span>
+              <div class="container-bottom">
+                <div class="pay-info">
+                  <p>Cost:</p>
+                  <span class="cost">100</span>
+                  <img src="images/foods/leaf.png" alt="settings" class="money-icon" id="cost_icon7">
+                </div>
+                <span class="count-upgrades">x0</span>
+              </div>
+            </div>
+          </div>
+          <div class="upgrade-item" id="upgrade_box" onclick="chooseUpgrade('box');">
+            <img src="images/upgrades/box.png" alt="box">
+            <div class="upgrade-info">
+              <span class="upgrade-name">Box</span>
+              <span class="upgrade-description">
+                For buying the Box you get an income of 0.1 food per second.
+              </span>
+              <div class="container-bottom">
+                <div class="pay-info">
+                  <p>Cost:</p>
+                  <span class="cost">100</span>
+                  <img src="images/foods/leaf.png" alt="settings" class="money-icon" id="cost_icon8">
+                </div>
+                <span class="count-upgrades">x0</span>
+              </div>
+            </div>
+          </div>
+          <div class="upgrade-item" id="upgrade_container" onclick="chooseUpgrade('container');">
+            <img src="images/upgrades/container.png" alt="placeholder">
+            <div class="upgrade-info">
+              <span class="upgrade-name">Container</span>
+              <span class="upgrade-description">
+                For buying the Container you get an income of 0.5 food per second.
+              </span>
+              <div class="container-bottom">
+                <div class="pay-info">
+                  <p>Cost:</p>
+                  <span class="cost">500</span>
+                  <img src="images/foods/leaf.png" alt="settings" class="money-icon" id="cost_icon9">
+                </div>
+                <span class="count-upgrades">x0</span>
+              </div>
+            </div>
+          </div>
+          <div class="upgrade-item" id="upgrade_railway_carriage" onclick="chooseUpgrade('railway_carriage');">
+            <img src="images/upgrades/railway_carriage.png" alt="railway_carriage">
+            <div class="upgrade-info">
+              <span class="upgrade-name">Railway carriage</span>
+              <span class="upgrade-description">
+                For buying the Railway carriage you get an income of 1 food per second.
+              </span>
+              <div class="container-bottom">
+                <div class="pay-info">
+                  <p>Cost:</p>
+                  <span class="cost">1000</span>
+                  <img src="images/foods/leaf.png" alt="settings" class="money-icon" id="cost_icon10">
+                </div>
+                <span class="count-upgrades">x0</span>
+              </div>
+            </div>
+          </div>
+          <div class="upgrade-item" id="upgrade_ship" onclick="chooseUpgrade('ship');">
+            <img src="images/upgrades/ship.png" alt="ship">
+            <div class="upgrade-info">
+              <span class="upgrade-name">Ship</span>
+              <span class="upgrade-description">
+                For buying the Ship you get an income of 5 food per second.
+              </span>
+              <div class="container-bottom">
+                <div class="pay-info">
+                  <p>Cost:</p>
+                  <span class="cost">5000</span>
+                  <img src="images/foods/leaf.png" alt="settings" class="money-icon" id="cost_icon11">
+                </div>
+                <span class="count-upgrades">x0</span>
+              </div>
+            </div>
+          </div>
+          <div class="upgrade-item" id="upgrade_warehouse" onclick="chooseUpgrade('warehouse');">
+            <img src="images/upgrades/warehouse.png" alt="warehouse">
+            <div class="upgrade-info">
+              <span class="upgrade-name">Warehouse</span>
+              <span class="upgrade-description">
+                For buying the Warehouse you get an income of 10 food per second.
+              </span>
+              <div class="container-bottom">
+                <div class="pay-info">
+                  <p>Cost:</p>
+                  <span class="cost">10000</span>
+                  <img src="images/foods/leaf.png" alt="settings" class="money-icon" id="cost_icon12">
+                </div>
+                <span class="count-upgrades">x0</span>
+              </div>
+            </div>
+          </div>
+          <div class="upgrade-item" id="upgrade_crown" onclick="chooseUpgrade('crown');">
+            <img src="images/upgrades/crown.png" alt="crown">
+            <div class="upgrade-info">
+              <span class="upgrade-name">Crown</span>
+              <span class="upgrade-description">
+                For buying the Crown you get an income of 50 food per second.
+              </span>
+              <div class="container-bottom">
+                <div class="pay-info">
+                  <p>Cost:</p>
+                  <span class="cost">50000</span>
+                  <img src="images/foods/leaf.png" alt="settings" class="money-icon" id="cost_icon13">
+                </div>
+                <span class="count-upgrades">x0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="modal-container-upgrade">
+            <div class="modal-background">
+              <div class="modal-upgrade">
+                <div class="title">
+                  <div id="placeholder-title"></div>
+                  <span class="title-text">upgrade</span>
+                  <span class="count-upgrades">x0</span>
+                  <span id="hidden_value" style="display: none;"></span>
+                </div>
+                <img src="images/upgrades/cursor.png" alt="cursor" width="100%" id="buy_upgrade_cursor">
+                <img src="images/upgrades/box.png" alt="box" width="100%" id="buy_upgrade_box">
+                <img src="images/upgrades/container.png" alt="container" width="100%" id="buy_upgrade_container">
+                <img src="images/upgrades/railway_carriage.png" alt="railway_carriage" width="100%" id="buy_upgrade_railway_carriage">
+                <img src="images/upgrades/ship.png" alt="ship" width="100%" id="buy_upgrade_ship">
+                <img src="images/upgrades/warehouse.png" alt="warehouse" width="100%" id="buy_upgrade_warehouse">
+                <img src="images/upgrades/crown.png" alt="crown" width="100%" id="buy_upgrade_crown">
+                <span id="error-message">  </span>
+                <div class="pay-info">
+                  <p>Cost:</p>
+                  <span class="cost">6000</span>
+                  <img src="images/foods/leaf.png" alt="settings" class="money-icon" id="cost_icon15">
+                  
+                </div>
+                <div class="mini-buttons">
+                  <div id="upgrade-buy" onclick="buyUpgrade(1);"><img src="images/icons/buy.svg" alt="buy"></div>
+                  <div id="upgrade-buy" onclick="buyUpgrade(50);"><img src="images/icons/buy50.svg" alt="buy"></div>
+                  <div id="upgrade-deny"><img src="images/icons/deny.svg" alt="deny"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="animals">
+        <span class="shop-name" onclick="showAnimalShop();">ANIMALS</span>
+        <div class="shop-animals">
+          <div class="animal-item" onclick="chooseAnimal('cat');" id="item_cat">
+            <img src="images/shop/cat.png" alt="placeholder">
+            <div class="pay-info">
+              <p>Cost:</p>
+              <span class="cost">0</span>
+              <img src="images/foods/leaf.png" alt="settings" class="money-icon" id="cost_icon1">
+            </div>
+          </div>
+          <div class="animal-item" onclick="chooseAnimal('korgi');" id="item_korgi">
+            <img src="images/shop/korgi.png" alt="placeholder">
+            <div class="pay-info">
+              <p>Cost:</p>
+              <span class="cost">20000</span>
+              <img src="images/foods/leaf.png" alt="settings" class="money-icon" id="cost_icon2">
+            </div>
+          </div>
+          <div class="animal-item" onclick="chooseAnimal('panda');" id="item_panda">
+            <img src="images/shop/panda.png" alt="placeholder">
+            <div class="pay-info">
+              <p>Cost:</p>
+              <span class="cost">750000</span>
+              <img src="images/foods/leaf.png" alt="settings" class="money-icon" id="cost_icon3">
+            </div>
+          </div>
+          <div class="animal-item" onclick="chooseAnimal('red_panda');" id="item_red_panda">
+            <img src="images/shop/red_panda.png" alt="placeholder">
+            <div class="pay-info">
+              <p>Cost:</p>
+              <span class="cost">80M</span>
+              <img src="images/foods/leaf.png" alt="settings" class="money-icon" id="cost_icon4">
+            </div>
+          </div>
+          <div class="animal-item" onclick="chooseAnimal('koala');" id="item_koala">
+            <img src="images/shop/koala.png" alt="placeholder">
+            <div class="pay-info">
+              <p>Cost:</p>
+              <span class="cost">1.5B</span>
+              <img src="images/foods/leaf.png" alt="settings" class="money-icon" id="cost_icon5">
+            </div>
+          </div>
+          <div class="animal-item" onclick="chooseAnimal('sloth');" id="item_sloth">
+            <img src="images/shop/sloth.png" alt="placeholder">
+            <div class="pay-info">
+              <p>Cost:</p>
+              <span class="cost">100B</span>
+              <img src="images/foods/leaf.png" alt="settings" class="money-icon" id="cost_icon6">
+            </div>
+          </div>
+          <div id="modal-container-shop">
+            <div class="modal-background">
+              <div class="modal-shop">
+                <div class="title">
+                  <span class="title-text">CAT</span>
+                  <span id="hidden_value" style="display: none;"></span>
+                </div>
+                <img src="images/shop/cat.png" alt="cat" width="100%" id="buy_animal_cat">
+                <img src="images/shop/korgi.png" alt="korgi" width="100%" id="buy_animal_korgi">
+                <img src="images/shop/panda.png" alt="panda" width="100%" id="buy_animal_panda">
+                <img src="images/shop/red_panda.png" alt="red_panda" width="100%" id="buy_animal_red_panda">
+                <img src="images/shop/koala.png" alt="koala" width="100%" id="buy_animal_koala">
+                <img src="images/shop/sloth.png" alt="sloth" width="100%" id="buy_animal_sloth">
+                <span id="error-message">  </span>
+                <div class="pay-info">
+                  <p>Cost:</p>
+                  <span class="cost">6000</span>
+                  <img src="images/foods/leaf.png" alt="settings" class="money-icon" id="cost_icon14">
+                </div>
+                <div class="mini-buttons">
+                  <div id="shop-buy" onclick="buyAnimal();"><img src="images/icons/buy.svg" alt="buy"></div>
+                  <div id="shop-deny"><img src="images/icons/deny.svg" alt="deny"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="idea">
+        <div class="container">
+          <div class="card">
+            <div class="front">Click to flip</div>
+            <div class="back">Loading...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <menu class="menu">
+    
+    <button class="menu__item active" style="--bgColorItem: #ff8c00;" onclick="showClicker();">
+      <svg class="icon" viewBox="0 0 28 28" fill="#fff">
+        <line class="cls-1" x1="2.88" y1="2.8" x2="6.45" y2="6.42"/>
+        <line class="cls-1" x1="9.11" y1="0.01" x2="9.04" y2="5.1"/>
+        <line class="cls-1" x1="15.29" y1="1.28" x2="11.69" y2="4.88"/>
+        <line class="cls-1" x1="5.09" y1="8.98" x2="0.01" y2="8.95"/>
+        <line class="cls-1" x1="5.05" y1="11.7" x2="1.46" y2="15.29"/>
+        <path class="cls-2" d="M11.76,11.53c-.76.64,2.49,11.27,4,13.06.65.76,1-2.67,3.83-5.35,2.64-2.53,5.88-2.89,5.06-3.42C22.69,14.56,12.53,10.88,11.76,11.53Z" transform="translate(-2.35 -2.37)"/>
+      </svg>
+    </button>
+
+    <button class="menu__item" style="--bgColorItem: #f54888;" onclick="showShop();">
+      <svg class="icon" viewBox="0 0 24 24">
+        <polygon class="cls-1" points="5.61 21.58 3.87 20.75 3.22 19.3 3.07 10.51 1.07 9.49 0.5 7.22 2.6 1.46 3.98 0.5 18.41 0.5 19.95 1.46 21.73 7.02 21.45 9.49 19.53 10.8 19.53 19.48 18.93 20.67 17.5 21.58 13.76 21.58 13.71 17.41 12.72 16.08 11.11 15.71 9.36 16.31 8.87 17.53 8.96 21.58 5.61 21.58"/>
+        <path class="cls-1" d="M25.54,13.6l-4.3-3.52-3.89,3.23-4.23-3.23L9.06,13.31" transform="translate(-6.19 -2.96)"/>
+      </svg>
+    </button>
+
+    <button class="menu__item" style="--bgColorItem: #65ddb7;" onclick="showIdeas();">
+      <svg class="icon" viewBox="0 0 24 24" >
+        <path class="cls-1" d="M15.56,24.45a3.52,3.52,0,0,0,1-1.71l.18-1.8a7.38,7.38,0,0,1,1-3l1.47-2.33a5.44,5.44,0,0,0,0-3,5,5,0,0,0-2-2.51,3.62,3.62,0,0,0-2.87-.74,6.24,6.24,0,0,0-3.39.92,4,4,0,0,0-1.59,3.13,4,4,0,0,0,.84,3l1,1.6a7.44,7.44,0,0,1,.73,2.93l.58,1.8a2.22,2.22,0,0,0,.84,1.47C13.52,24.49,15.4,24.79,15.56,24.45Z" transform="translate(-1.58 -2.09)"/>
+        <polyline class="cls-1" points="11.58 19.56 15.03 19.56 10.59 19.56"/>
+        <path class="cls-2" d="M9.25,8.76,5.82,5.32Z" transform="translate(-1.58 -2.09)"/>
+        <path class="cls-2" d="M19.6,8.76,23,5.34Z" transform="translate(-1.58 -2.09)"/>
+        <line class="cls-3" x1="5.36" y1="11.31" x2="0.5" y2="11.31"/>
+        <line class="cls-3" x1="12.85" y1="5.36" x2="12.85" y2="0.5"/>
+        <line class="cls-3" x1="24.59" y1="11.31" x2="19.73" y2="11.31"/>
+      </svg>
+    </button>
+
+    <div class="menu__border"></div>
+  </menu>
+</div>
+<script type="text/javascript" src="scripts/clicker.js"></script>
+<script type="text/javascript" src="scripts/index.js"></script>
+<script type="text/javascript" src="scripts/menu.js"></script>
+<script type="text/javascript" src="scripts/ideas.js"></script>
+<script type="text/javascript" src="scripts/falling_things.js"></script>
+<script type="text/javascript" src="scripts/falling.js"></script>
+<script>
+    window.onload = function () {
+      document.body.classList.add('loaded_hiding');
+      window.setTimeout(function () {
+        document.body.classList.add('loaded');
+        document.body.classList.remove('loaded_hiding');
+      }, 500);
+    }
+</script>
+</body>
+</html>
