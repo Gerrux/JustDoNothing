@@ -1,5 +1,7 @@
 # JustDoNothing
-First experience in the development of web mobile applications. A simple clicker with a thoughtful economy and a simple design. Made in Monaca
+First experience in the development of web mobile applications. A simple clicker with a thoughtful economy and a simple design. 
+
+Made in Monaca
 
 Link for download on Android: [link](https://monacac.page.link/PAuknFFW61e1LS869)
 
